@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "projects": {
+    "number-plates": {
+      "projectType": "application",
+      "root": "apps/number-plates",
+      "sourceRoot": "apps/number-plates/src",
+      "prefix": "test-project",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/number-plates",
+            "index": "apps/number-plates/src/index.html",
+            "main": "apps/number-plates/src/main.ts",
+            "polyfills": "apps/number-plates/src/polyfills.ts",
+            "tsConfig": "apps/number-plates/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/number-plates/src/favicon.ico",
+              "apps/number-plates/src/assets"
+            ],
+            "styles": ["apps/number-plates/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/number-plates/src/environments/environment.ts",
+                  "with": "apps/number-plates/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "number-plates:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "number-plates:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "number-plates:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/number-plates/src/**/*.ts",
+              "apps/number-plates/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/number-plates"],
+          "options": {
+            "jestConfig": "apps/number-plates/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "number-plates-e2e": {
+      "root": "apps/number-plates-e2e",
+      "sourceRoot": "apps/number-plates-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/number-plates-e2e/cypress.json",
+            "tsConfig": "apps/number-plates-e2e/tsconfig.e2e.json",
+            "devServerTarget": "number-plates:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "number-plates:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/number-plates-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "number-plates"
+}
